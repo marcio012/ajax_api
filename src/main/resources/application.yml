@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: test
+  jpa:
+    open-in-view: false
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+  h2:
+    console:
+      path: /h2-console
+server:
+  compression:
+    enabled: true
