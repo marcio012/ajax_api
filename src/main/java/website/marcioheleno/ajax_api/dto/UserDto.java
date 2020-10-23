@@ -1,9 +1,12 @@
 package website.marcioheleno.ajax_api.dto;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import website.marcioheleno.ajax_api.entities.User;
 
-import javax.persistence.Column;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,10 +15,15 @@ import java.util.Set;
 public class UserDto {
 
     private Long id;
+
+    @Size(min = 3, max = 30, message = "FirstName deve ter entre 3 e 30 caracteres")
+    @NotBlank(message = "O Campo firstName é obrigatório")
     private String firstName;
+
+    @NotBlank(message = "O Campo lastName é obrigatório")
     private String lastName;
 
-    @Column(unique = true)
+    @Email(message = "Digitar um email válido")
     private String email;
 
     @Getter

@@ -11,6 +11,7 @@ import website.marcioheleno.ajax_api.dto.UserDto;
 import website.marcioheleno.ajax_api.dto.UserInsertDto;
 import website.marcioheleno.ajax_api.services.UserService;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -39,7 +40,7 @@ public class UserResources {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> insert(@RequestBody UserInsertDto userInsertDto) {
+    public ResponseEntity<UserDto> insert(@Valid @RequestBody UserInsertDto userInsertDto) {
         UserDto userDto = userService.insert(userInsertDto);
 
         // TODO: verificar outra opção de setar o path
@@ -53,7 +54,7 @@ public class UserResources {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> update(@PathVariable Long id,@Valid @RequestBody UserDto userDto) {
         userDto = userService.update(id, userDto);
         return ResponseEntity.ok().body(userDto);
     }
