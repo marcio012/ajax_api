@@ -41,15 +41,15 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserDto findById(Long id) {
-        Optional<User> optionalProduct = userRepository.findById(id);
-        User userEntity = optionalProduct.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        Optional<User> optionalUser = userRepository.findById(id);
+        User userEntity = optionalUser.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
             return new UserDto(userEntity);
     }
 
     @Transactional
     public UserDto insert(UserInsertDto userInsertDto) {
         User userEntity = new User();
-        convertUserEntityToUserDto(userInsertDto, userEntity);
+        convertUserDtoToUserEntity(userInsertDto, userEntity);
         userEntity.setPassword(passwordEncoder.encode(userInsertDto.getPassword()));
         userEntity = userRepository.save(userEntity);
         return new UserDto(userEntity);
@@ -59,7 +59,7 @@ public class UserService {
     public UserDto update(Long id, UserDto userDto) {
         try {
             User userEntity = userRepository.getOne(id);
-            convertUserEntityToUserDto(userDto, userEntity);
+            convertUserDtoToUserEntity(userDto, userEntity);
             userEntity = userRepository.save(userEntity);
             return new UserDto(userEntity);
         } catch (EntityNotFoundException e) {
@@ -78,16 +78,17 @@ public class UserService {
         }
     }
 
-    private void convertUserEntityToUserDto(UserDto userDto, User userEntity) {
+    private void convertUserDtoToUserEntity(UserDto userDto, User userEntity) {
 
         userEntity.setFirstName(userDto.getFirstName());
         userEntity.setLastName(userDto.getLastName());
         userEntity.setEmail(userDto.getEmail());
+        System.out.println(userDto.getRoles().toString());
 
         userEntity.getRoles().clear();
 
         for (RoleDto roleDto: userDto.getRoles()) {
-            Role role = roleRepository.getOne(userDto.getId());
+            Role role = roleRepository.getOne(roleDto.getId());
             userEntity.getRoles().add(role);
         }
     }

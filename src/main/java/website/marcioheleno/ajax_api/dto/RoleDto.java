@@ -3,7 +3,6 @@ package website.marcioheleno.ajax_api.dto;
 import lombok.*;
 import website.marcioheleno.ajax_api.entities.Role;
 
-@Builder
 @Getter
 @Setter
 public class RoleDto {
