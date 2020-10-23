@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "tb_role")
@@ -20,4 +18,11 @@ public class Role {
     private Long id;
     private String authority;
 
+    public Role() {
+    }
+
+    public Role(Long id, String authority) {
+        this.id = id;
+        this.authority = authority;
+    }
 }
