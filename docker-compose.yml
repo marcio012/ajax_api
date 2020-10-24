@@ -1,0 +1,35 @@
+version: '3.4'
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+    - "5432:5432"
+    env_file:
+      - database.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - api-ajax
+  api:
+    container_name: api-ajax
+    image: api_ajax
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+    networks:
+      - api-ajax
+
+volumes:
+  postgres_data: {}
+
+networks:
+  api-ajax:
+    driver: bridge
