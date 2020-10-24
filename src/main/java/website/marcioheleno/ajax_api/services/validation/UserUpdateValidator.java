@@ -7,7 +7,6 @@ import website.marcioheleno.ajax_api.entities.User;
 import website.marcioheleno.ajax_api.repositories.UserRepository;
 import website.marcioheleno.ajax_api.resources.exceptions.FieldMessage;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

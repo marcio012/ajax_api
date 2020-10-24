@@ -4,14 +4,18 @@ logging:
     org.springframework: info
     website.marcioheleno: error
 
+server:
+  compression:
+    enabled: true
+
 spring:
   profiles:
     active:
-      - test
+      - development
+#  main:
+#    banner-mode: console
   jpa:
     open-in-view: false
-    show-sql: true
-    generate-ddl: true
 
 ---
 
@@ -24,19 +28,19 @@ spring:
   h2:
     console:
       path: /h2-console
-server:
-  compression:
-    enabled: true
-
+  jpa:
+    show-sql: true
+    generate-ddl: true
 
 ---
 
 spring:
-  profiles: dev
+  profiles: stage
   datasource:
     url: jdbc:postgresql://localhost:5432/api-ajax
     username: postgres
-    password: 1234567
+    password: 1234
+    driver-class-name: org.postgresql.Driver
   jpa:
     properties:
       hibernate:
@@ -50,34 +54,31 @@ spring:
 ---
 
 spring:
-  profiles: dev2
+  profiles: development
   datasource:
     url: jdbc:postgresql://localhost:5432/api-ajax
     username: postgres
-    password: 1234567
+    password: 1234
   jpa:
     properties:
       javax:
         persistence:
           schema-generation:
             create-source: metadata
-          script:
-            action: create
-            create-target: create.sql
+            script:
+              action: create
+              create-target: "create.sql"
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        ddl-auto: true
-        formatSql: true
+        hbm2ddl:
+          delimiter: ;
         jdbc:
           lob:
-            non-contextual-creation: true
-
+            non_contextual_creation: true
     hibernate:
-      hbm2ddl:
-        delimiter: ";"
-      ddlAuto: none
+      ddl-auto: none
 
 ---
+
 
 spring:
   profiles: prod

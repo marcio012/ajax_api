@@ -1,6 +1,7 @@
 package website.marcioheleno.ajax_api.dto;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import website.marcioheleno.ajax_api.entities.Role;
 
 @Getter

@@ -13,7 +13,6 @@ services:
       - api-ajax
   api:
     container_name: api-ajax
-    image: api_ajax
     build:
       context: .
       dockerfile: Dockerfile
