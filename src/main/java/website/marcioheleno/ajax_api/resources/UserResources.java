@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import website.marcioheleno.ajax_api.dto.UserDto;
 import website.marcioheleno.ajax_api.dto.UserInsertDto;
+import website.marcioheleno.ajax_api.dto.UserUpdateDto;
 import website.marcioheleno.ajax_api.services.UserService;
 
 import javax.validation.Valid;
@@ -54,8 +55,8 @@ public class UserResources {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable Long id,@Valid @RequestBody UserDto userDto) {
-        userDto = userService.update(id, userDto);
+    public ResponseEntity<UserDto> update(@PathVariable Long id,@Valid @RequestBody UserUpdateDto userUpdateDto) {
+        UserDto userDto = userService.update(id, userUpdateDto);
         return ResponseEntity.ok().body(userDto);
     }
 

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import website.marcioheleno.ajax_api.dto.RoleDto;
 import website.marcioheleno.ajax_api.dto.UserDto;
 import website.marcioheleno.ajax_api.dto.UserInsertDto;
+import website.marcioheleno.ajax_api.dto.UserUpdateDto;
 import website.marcioheleno.ajax_api.entities.Role;
 import website.marcioheleno.ajax_api.entities.User;
 import website.marcioheleno.ajax_api.repositories.RoleRepository;
@@ -56,10 +57,10 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto update(Long id, UserDto userDto) {
+    public UserDto update(Long id, UserUpdateDto userUpdateDto) {
         try {
             User userEntity = userRepository.getOne(id);
-            convertUserDtoToUserEntity(userDto, userEntity);
+            convertUserDtoToUserEntity(userUpdateDto, userEntity);
             userEntity = userRepository.save(userEntity);
             return new UserDto(userEntity);
         } catch (EntityNotFoundException e) {
