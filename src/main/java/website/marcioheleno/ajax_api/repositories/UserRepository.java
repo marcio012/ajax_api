@@ -5,5 +5,5 @@ import website.marcioheleno.ajax_api.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findUserByEmail(String email);
+    User findByEmail(String email);
 }
