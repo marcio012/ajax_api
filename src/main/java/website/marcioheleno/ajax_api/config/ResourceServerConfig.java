@@ -8,6 +8,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -42,12 +43,16 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         }
 
         http.authorizeRequests()
+                .antMatchers("/*").permitAll()
                 .antMatchers("/oauth/token").permitAll()
+                .antMatchers("/auth").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/users").permitAll()
                 .antMatchers("/users").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/users").hasAnyRole("ADMIN")
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and().csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.cors().configurationSource(corsConfigurationSource());
     }
