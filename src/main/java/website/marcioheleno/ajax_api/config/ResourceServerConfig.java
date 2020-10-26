@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -43,7 +44,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         }
 
         http.authorizeRequests()
-                .antMatchers("/*").permitAll()
                 .antMatchers("/oauth/token").permitAll()
                 .antMatchers("/auth").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
@@ -52,7 +52,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/users").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterBefore(new AuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.cors().configurationSource(corsConfigurationSource());
     }
